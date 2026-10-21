@@ -54,10 +54,10 @@ export default function Contact() {
     const trimmedSubject = formData.subject.trim();
     const trimmedMessage = formData.message.trim();
 
-    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+    if (!trimmedName || !trimmedMessage) {
       setToast({
         open: true,
-        message: 'Please fill out all required fields (Name, Email, and Message).',
+        message: 'Please fill out your Name and Message.',
         severity: 'warning',
       });
       return;
@@ -72,7 +72,7 @@ export default function Contact() {
       `----------------------------------------\n` +
       `Sender Details:\n` +
       `• Name: ${trimmedName}\n` +
-      `• Email: ${trimmedEmail}\n` +
+      (trimmedEmail ? `• Email: ${trimmedEmail}\n` : '') +
       `• Topic: ${trimmedSubject || 'General Opportunity / Inquiry'}\n` +
       `• Sent via: Akash's Portfolio Website`;
 
@@ -293,15 +293,14 @@ export default function Contact() {
 
                   <div>
                     <label className="block text-xs font-medium text-slate-300 mb-1.5">
-                      Email Address *
+                      Email Address <span className="text-slate-500 font-normal">(Optional)</span>
                     </label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="john@example.com"
-                      required
+                      placeholder="john@example.com (optional)"
                       className="w-full px-4 py-2.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-white text-sm focus:outline-none focus:border-teal-500 transition-colors placeholder:text-slate-500"
                     />
                   </div>
