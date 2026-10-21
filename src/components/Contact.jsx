@@ -12,7 +12,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import LaunchIcon from '@mui/icons-material/Launch';
 import confetti from 'canvas-confetti';
 import { portfolioData } from '../data/portfolioData';
 
@@ -65,28 +65,35 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    const phoneNumber = personalInfo.whatsappNumber || (personalInfo.phone ? personalInfo.phone.replace(/[^0-9]/g, '') : '917904235901');
+    const emailSubject = trimmedSubject || `Portfolio Inquiry from ${trimmedName}`;
+    const emailBody =
+      `Hello Akash,\n\n` +
+      `${trimmedMessage}\n\n` +
+      `----------------------------------------\n` +
+      `Sender Details:\n` +
+      `• Name: ${trimmedName}\n` +
+      `• Email: ${trimmedEmail}\n` +
+      `• Topic: ${trimmedSubject || 'General Opportunity / Inquiry'}\n` +
+      `• Sent via: Akash's Portfolio Website`;
 
-    // Format the WhatsApp message with clear markdown layout
-    const formattedText =
-      `*New Contact Message from Portfolio*\n\n` +
-      `👤 *Name:* ${trimmedName}\n` +
-      `📧 *Email:* ${trimmedEmail}\n` +
-      (trimmedSubject ? `📌 *Subject:* ${trimmedSubject}\n` : '') +
-      `\n💬 *Message:*\n${trimmedMessage}\n\n` +
-      `🌐 _Sent from Akash's Portfolio Website_`;
+    const encodedSubject = encodeURIComponent(emailSubject);
+    const encodedBody = encodeURIComponent(emailBody);
 
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(formattedText)}`;
+    // Direct Gmail Web Compose link
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}&su=${encodedSubject}&body=${encodedBody}`;
 
-    // Open WhatsApp in a new tab/window
-    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    // Standard mailto link as fallback
+    const mailtoUrl = `mailto:${encodeURIComponent(personalInfo.email)}?subject=${encodedSubject}&body=${encodedBody}`;
+
+    // Open Gmail compose in a new tab
+    const newWindow = window.open(gmailUrl, '_blank', 'noopener,noreferrer');
     if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-      window.location.href = whatsappUrl;
+      window.location.href = mailtoUrl;
     }
 
     setToast({
       open: true,
-      message: 'Opening WhatsApp with your formatted message! Tap send in WhatsApp to deliver it directly.',
+      message: 'Opening Gmail with your pre-filled message! You can review and click Send.',
       severity: 'success',
     });
 
@@ -180,34 +187,34 @@ export default function Contact() {
               </Tooltip>
             </div>
 
-            {/* WhatsApp Card */}
-            <div className="glass-card p-5 rounded-2xl border border-slate-800 flex items-center justify-between group hover:border-emerald-500/40 transition-all">
+            {/* Direct Gmail Card */}
+            <div className="glass-card p-5 rounded-2xl border border-slate-800 flex items-center justify-between group hover:border-red-500/40 transition-all">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                  <WhatsAppIcon fontSize="small" />
+                <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400">
+                  <EmailIcon fontSize="small" />
                 </div>
                 <div>
-                  <div className="text-xs text-slate-400">WhatsApp</div>
+                  <div className="text-xs text-slate-400">Direct Gmail</div>
                   <a
-                    href={`https://wa.me/${personalInfo.whatsappNumber || '917904235901'}?text=${encodeURIComponent('Hi Akash, I came across your portfolio and would like to connect!')}`}
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}&su=${encodeURIComponent('Full Stack Developer Opportunity / Project Inquiry')}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors"
+                    className="text-sm font-semibold text-white group-hover:text-red-300 transition-colors"
                   >
-                    {personalInfo.whatsapp || personalInfo.phone}
+                    Compose on Gmail
                   </a>
                 </div>
               </div>
-              <Tooltip title="Chat on WhatsApp">
+              <Tooltip title="Compose in Gmail Web">
                 <IconButton
                   size="small"
                   component="a"
-                  href={`https://wa.me/${personalInfo.whatsappNumber || '917904235901'}?text=${encodeURIComponent('Hi Akash, I came across your portfolio and would like to connect!')}`}
+                  href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}&su=${encodeURIComponent('Full Stack Developer Opportunity / Project Inquiry')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  sx={{ color: '#94a3b8', '&:hover': { color: '#25D366' } }}
+                  sx={{ color: '#94a3b8', '&:hover': { color: '#ea4335' } }}
                 >
-                  <WhatsAppIcon fontSize="small" />
+                  <LaunchIcon fontSize="small" />
                 </IconButton>
               </Tooltip>
             </div>
@@ -258,13 +265,13 @@ export default function Contact() {
                 <h3 className="text-xl font-bold text-white">
                   Send a Direct Message
                 </h3>
-                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <WhatsAppIcon sx={{ fontSize: 13 }} />
-                  Delivered via WhatsApp
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+                  <EmailIcon sx={{ fontSize: 13 }} />
+                  Delivered via Gmail
                 </span>
               </div>
               <p className="text-xs text-slate-400 mb-6">
-                Have a project or open role in mind? Fill in your details below — upon submitting, your message will be forwarded directly to Akash's WhatsApp for an instant response.
+                Have an engineering opportunity or project in mind? Fill in your details below — upon submitting, a pre-filled draft will open directly in Gmail ready to send to Akash ({personalInfo.email}).
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -334,26 +341,26 @@ export default function Contact() {
                   variant="contained"
                   fullWidth
                   disabled={isSubmitting}
-                  startIcon={<WhatsAppIcon sx={{ fontSize: 20 }} />}
+                  startIcon={<EmailIcon sx={{ fontSize: 20 }} />}
                   sx={{
-                    background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+                    background: 'linear-gradient(135deg, #ea4335 0%, #c5221f 100%)',
                     py: 1.5,
                     color: '#ffffff',
                     fontWeight: 600,
                     fontSize: '0.95rem',
-                    boxShadow: '0 8px 20px -4px rgba(37, 211, 102, 0.4)',
+                    boxShadow: '0 8px 20px -4px rgba(234, 67, 53, 0.4)',
                     '&:hover': {
-                      background: 'linear-gradient(135deg, #20ba59 0%, #0e7367 100%)',
-                      boxShadow: '0 10px 24px -4px rgba(37, 211, 102, 0.5)',
+                      background: 'linear-gradient(135deg, #d93025 0%, #a51d24 100%)',
+                      boxShadow: '0 10px 24px -4px rgba(234, 67, 53, 0.5)',
                     }
                   }}
                 >
-                  {isSubmitting ? 'Opening WhatsApp...' : 'Send Message to WhatsApp'}
+                  {isSubmitting ? 'Opening Gmail...' : 'Send Message via Gmail'}
                 </Button>
 
                 <div className="flex items-center justify-center gap-1.5 text-xs text-slate-400 pt-1">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>Opens WhatsApp directly with your pre-formatted message for Akash (+91 79042 35901)</span>
+                  <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse"></span>
+                  <span>Opens Gmail compose directly pre-filled with your message addressed to {personalInfo.email}</span>
                 </div>
               </form>
             </div>
