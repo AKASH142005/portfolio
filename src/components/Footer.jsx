@@ -2,6 +2,7 @@ import React from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import EmailIcon from '@mui/icons-material/Email';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { portfolioData } from '../data/portfolioData';
 
@@ -57,6 +58,15 @@ export default function Footer({ onOpenResume }) {
               aria-label="LinkedIn"
             >
               <LinkedInIcon fontSize="small" />
+            </a>
+            <a
+              href={`https://wa.me/${personalInfo.whatsappNumber || '917904235901'}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-9 h-9 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:border-emerald-500/40 transition-all"
+              aria-label="WhatsApp"
+            >
+              <WhatsAppIcon fontSize="small" />
             </a>
             <a
               href={`mailto:${personalInfo.email}`}

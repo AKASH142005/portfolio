@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  TextField,
   Button,
   Snackbar,
   Alert,
@@ -13,8 +12,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import SendIcon from '@mui/icons-material/Send';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import confetti from 'canvas-confetti';
 import { portfolioData } from '../data/portfolioData';
 
@@ -51,26 +49,50 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedSubject = formData.subject.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
       setToast({
         open: true,
-        message: 'Please fill out all required fields.',
+        message: 'Please fill out all required fields (Name, Email, and Message).',
         severity: 'warning',
       });
       return;
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setToast({
-        open: true,
-        message: 'Thank you! Your message has been received. Akash will reach out promptly.',
-        severity: 'success',
-      });
-      confetti({ particleCount: 70, spread: 60, origin: { y: 0.8 } });
-      setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 800);
+
+    const phoneNumber = personalInfo.whatsappNumber || (personalInfo.phone ? personalInfo.phone.replace(/[^0-9]/g, '') : '917904235901');
+
+    // Format the WhatsApp message with clear markdown layout
+    const formattedText =
+      `*New Contact Message from Portfolio*\n\n` +
+      `👤 *Name:* ${trimmedName}\n` +
+      `📧 *Email:* ${trimmedEmail}\n` +
+      (trimmedSubject ? `📌 *Subject:* ${trimmedSubject}\n` : '') +
+      `\n💬 *Message:*\n${trimmedMessage}\n\n` +
+      `🌐 _Sent from Akash's Portfolio Website_`;
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(formattedText)}`;
+
+    // Open WhatsApp in a new tab/window
+    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+      window.location.href = whatsappUrl;
+    }
+
+    setToast({
+      open: true,
+      message: 'Opening WhatsApp with your formatted message! Tap send in WhatsApp to deliver it directly.',
+      severity: 'success',
+    });
+
+    confetti({ particleCount: 70, spread: 60, origin: { y: 0.8 } });
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSubmitting(false);
   };
 
   return (
@@ -158,6 +180,38 @@ export default function Contact() {
               </Tooltip>
             </div>
 
+            {/* WhatsApp Card */}
+            <div className="glass-card p-5 rounded-2xl border border-slate-800 flex items-center justify-between group hover:border-emerald-500/40 transition-all">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                  <WhatsAppIcon fontSize="small" />
+                </div>
+                <div>
+                  <div className="text-xs text-slate-400">WhatsApp</div>
+                  <a
+                    href={`https://wa.me/${personalInfo.whatsappNumber || '917904235901'}?text=${encodeURIComponent('Hi Akash, I came across your portfolio and would like to connect!')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-semibold text-white group-hover:text-emerald-300 transition-colors"
+                  >
+                    {personalInfo.whatsapp || personalInfo.phone}
+                  </a>
+                </div>
+              </div>
+              <Tooltip title="Chat on WhatsApp">
+                <IconButton
+                  size="small"
+                  component="a"
+                  href={`https://wa.me/${personalInfo.whatsappNumber || '917904235901'}?text=${encodeURIComponent('Hi Akash, I came across your portfolio and would like to connect!')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{ color: '#94a3b8', '&:hover': { color: '#25D366' } }}
+                >
+                  <WhatsAppIcon fontSize="small" />
+                </IconButton>
+              </Tooltip>
+            </div>
+
             {/* Location Card */}
             <div className="glass-card p-5 rounded-2xl border border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -200,11 +254,17 @@ export default function Contact() {
           {/* Right: Interactive Message Form */}
           <div className="lg:col-span-7">
             <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800">
-              <h3 className="text-xl font-bold text-white mb-2">
-                Send a Direct Message
-              </h3>
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <h3 className="text-xl font-bold text-white">
+                  Send a Direct Message
+                </h3>
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                  <WhatsAppIcon sx={{ fontSize: 13 }} />
+                  Delivered via WhatsApp
+                </span>
+              </div>
               <p className="text-xs text-slate-400 mb-6">
-                Have a project or open role in mind? Drop me a message and let's discuss details.
+                Have a project or open role in mind? Fill in your details below — upon submitting, your message will be forwarded directly to Akash's WhatsApp for an instant response.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -274,21 +334,27 @@ export default function Contact() {
                   variant="contained"
                   fullWidth
                   disabled={isSubmitting}
-                  endIcon={<SendIcon sx={{ fontSize: 16 }} />}
+                  startIcon={<WhatsAppIcon sx={{ fontSize: 20 }} />}
                   sx={{
-                    background: 'linear-gradient(135deg, #14b8a6 0%, #0284c7 100%)',
+                    background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
                     py: 1.5,
                     color: '#ffffff',
                     fontWeight: 600,
                     fontSize: '0.95rem',
-                    boxShadow: '0 8px 20px -4px rgba(20, 184, 166, 0.4)',
+                    boxShadow: '0 8px 20px -4px rgba(37, 211, 102, 0.4)',
                     '&:hover': {
-                      background: 'linear-gradient(135deg, #0d9488 0%, #0369a1 100%)',
+                      background: 'linear-gradient(135deg, #20ba59 0%, #0e7367 100%)',
+                      boxShadow: '0 10px 24px -4px rgba(37, 211, 102, 0.5)',
                     }
                   }}
                 >
-                  {isSubmitting ? 'Sending Message...' : 'Send Message'}
+                  {isSubmitting ? 'Opening WhatsApp...' : 'Send Message to WhatsApp'}
                 </Button>
+
+                <div className="flex items-center justify-center gap-1.5 text-xs text-slate-400 pt-1">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  <span>Opens WhatsApp directly with your pre-formatted message for Akash (+91 79042 35901)</span>
+                </div>
               </form>
             </div>
           </div>
