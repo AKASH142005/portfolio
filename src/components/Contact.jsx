@@ -115,7 +115,7 @@ export default function Contact() {
             Let's Build Something Exceptional
           </h2>
           <p className="mt-3 text-slate-400 text-base sm:text-lg">
-            Available immediately for Full Stack Developer (MERN) roles, high-impact freelance initiatives, and engineering teams.
+            Available immediately for Full Stack Developer roles, high-impact freelance initiatives, and engineering teams.
           </p>
         </div>
 

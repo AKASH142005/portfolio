@@ -71,7 +71,7 @@ export default function Navbar({ mode, toggleTheme, onOpenResume }) {
                 </span>
                 <span className="text-xs text-teal-400/90 font-mono flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse"></span>
-                  MERN Developer
+                  Full Stack Developer
                 </span>
               </div>
             </a>

@@ -22,7 +22,7 @@ export default function Footer({ onOpenResume }) {
               </span>
             </div>
             <p className="text-xs text-slate-400 max-w-sm">
-              Full Stack Developer (MERN) specializing in high-performance web systems and responsive user interfaces.
+              Full Stack Developer specializing in high-performance web systems and responsive user interfaces.
             </p>
           </div>
 

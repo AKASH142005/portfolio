@@ -27,12 +27,12 @@ export default function ResumeModal({ open, onClose }) {
   const copyResumeText = () => {
     const text = `
 AKASH A C
-FULL STACK DEVELOPER (MERN)
+FULL STACK DEVELOPER
 +91 79042 35901 | akashanbarasu@gmail.com | Kallakurichi, Tamil Nadu
 linkedin.com/in/akashanbarasu | github.com/AKASH142005
 
 PROFESSIONAL SUMMARY
-Full Stack Developer (MERN) with 3 deployed applications, including a freelance product-showcase and service-booking platform for a live client. Built 50+ REST endpoints across Node.js, Express.js and Fastify, with JWT authentication, 4-role access control, automated API and component tests, and MongoDB/MySQL. B.E. CSE 2026 graduate, available immediately.
+Full Stack Developer with 3 deployed applications, including a freelance product-showcase and service-booking platform for a live client. Built 50+ REST endpoints across Node.js, Express.js and Fastify, with JWT authentication, 4-role access control, automated API and component tests, and MongoDB/MySQL. B.E. CSE 2026 graduate, available immediately.
 
 TECHNICAL SKILLS
 Languages: JavaScript (ES6+), Java, SQL
@@ -168,7 +168,7 @@ ACHIEVEMENTS
                 AKASH A C
               </h1>
               <div className="text-sm sm:text-base font-bold text-slate-700 tracking-wide uppercase mb-2">
-                FULL STACK DEVELOPER (MERN)
+                FULL STACK DEVELOPER
               </div>
               <div className="text-xs sm:text-sm text-slate-600 flex flex-wrap justify-center items-center gap-x-3 gap-y-1">
                 <span>+91 79042 35901</span>
@@ -206,7 +206,7 @@ ACHIEVEMENTS
                 PROFESSIONAL SUMMARY
               </h2>
               <p className="text-xs sm:text-[13px] leading-relaxed text-slate-700">
-                Full Stack Developer (MERN) with 3 deployed applications, including a freelance product-showcase and service-booking platform for a live client. Built 50+ REST endpoints across Node.js, Express.js and Fastify, with JWT authentication, 4-role access control, automated API and component tests, and MongoDB/MySQL. B.E. CSE 2026 graduate, available immediately.
+                Full Stack Developer with 3 deployed applications, including a freelance product-showcase and service-booking platform for a live client. Built 50+ REST endpoints across Node.js, Express.js and Fastify, with JWT authentication, 4-role access control, automated API and component tests, and MongoDB/MySQL. B.E. CSE 2026 graduate, available immediately.
               </p>
             </div>
 
