@@ -1,7 +1,7 @@
 export const portfolioData = {
   personalInfo: {
     name: "Akash A C",
-    role: "Full Stack Developer (MERN)",
+    role: "Full Stack Developer",
     tagline: "Building high-performance, secure, and production-ready web applications with modern frontend & robust backend systems.",
     phone: "+91 79042 35901",
     whatsapp: "+91 79042 35901",
@@ -14,7 +14,7 @@ export const portfolioData = {
     github: "https://github.com/AKASH142005",
     githubHandle: "github.com/AKASH142005",
     leetcode: "https://leetcode.com/u/AKASH142005/",
-    summary: "Full Stack Developer (MERN) with 3 deployed applications, including a freelance product-showcase and service-booking platform for a live client. Built 50+ REST endpoints across Node.js, Express.js and Fastify, with JWT authentication, 4-role access control, automated API and component tests, and MongoDB/MySQL. B.E. CSE 2026 graduate, available immediately.",
+    summary: "Full Stack Developer with 3 deployed applications, including a freelance product-showcase and service-booking platform for a live client. Built 50+ REST endpoints across Node.js, Express.js and Fastify, with JWT authentication, 4-role access control, automated API and component tests, and MongoDB/MySQL. B.E. CSE 2026 graduate, available immediately.",
     statusBadge: "Available Immediately • B.E. CSE 2026",
     metrics: [
       { label: "Deployed Apps", value: "3", suffix: "", desc: "Live in production" },
@@ -206,7 +206,7 @@ export const portfolioData = {
       status: "Final Year Student • Available Immediately",
       details: [
         "Core Coursework: Data Structures & Algorithms, Database Management Systems, Object Oriented Programming, Operating Systems, Computer Networks.",
-        "Hands-on expertise architecting full-stack MERN & Fastify web applications.",
+        "Hands-on expertise architecting full-stack web applications with modern frontend and backend architectures.",
         "Top 5 Finalist at EPICS Hackathon'25 representing the college."
       ]
     },
